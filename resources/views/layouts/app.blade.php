@@ -9,7 +9,6 @@
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
     <link href="{{ asset('css/flatpickr.min.css') }}" rel="stylesheet">
-    <!-- @vite(['resources/js/app.js']) -->
 </head>
 
 <body id="page-top">
