@@ -78,6 +78,13 @@
     }
 }
 
+@media (max-width: 768px) {
+    .container,
+    .container-fluid {
+        min-width: 1000px;
+    }
+}
+
 *,
 *::before,
 *::after {
