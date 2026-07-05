@@ -96,7 +96,7 @@
             </div>
             
             <div class="container">
-                <div class="chart-area">
+                <div class="chart-area mb-3 mt-2">
                     <canvas id="mingguanChart"></canvas>
                 </div>
             </div>
@@ -284,7 +284,7 @@
                             },
                             callback: function(value) {
                                 const label = this.getLabelForValue(value);
-                                const max = 12;
+                                const max = 15;
 
                                 return label.length > max
                                     ? `${label.slice(0, max)}...`
@@ -391,7 +391,7 @@
                         align: 'top',
                         font: {
                             weight: 'bold',
-                            size: 14
+                            size: 12
                         },
                         formatter: (value) => value
                     }
