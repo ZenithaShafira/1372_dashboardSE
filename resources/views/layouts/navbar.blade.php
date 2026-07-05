@@ -9,7 +9,7 @@
     <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown no-arrow">
             <a class="sidebar-brand d-flex align-items-center justify-content-center">
-                <img src="{{ asset('img/logo-SE2026.png') }}" class="" alt="Logo SE2026" width="100px">
+                <img src="{{ asset('img/Logo-SE2026.png') }}" class="" alt="Logo SE2026" width="100px">
             </a>
         </li>
     </ul>
