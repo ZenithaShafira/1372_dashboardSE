@@ -18,7 +18,7 @@
 
     <!-- Isi dashboard di sini -->
 
-    <form action="{{ route('monitoring.upload') }}"
+    <form action="{{ route('monitoring.upload-monitoring') }}"
       method="POST"
       enctype="multipart/form-data">
 

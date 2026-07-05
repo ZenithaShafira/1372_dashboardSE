@@ -6,15 +6,24 @@ use App\Models\PPL;
 use App\Models\Monitoring;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\PML;
 
 class UploadMonitoringController extends Controller
 {
+    public function index()
+    {
+        $all_pml = pml::all();
+        
+        return view('upload', compact('all_pml'));
+    }
+
     public function upload(Request $request)
     {
         $request->validate([
             'file' => 'required|mimes:csv,txt'
         ]);
 
+        $all_pml = pml::all();
         $file = fopen($request->file('file')->getRealPath(), 'r');
 
         $header = fgetcsv($file);
@@ -71,9 +80,6 @@ class UploadMonitoringController extends Controller
             ]);
         }
 
-        return redirect()->back()->with(
-            'success',
-            'Data monitoring berhasil diimport'
-        );
+        return view('upload', compact('all_pml'));
     }
 }

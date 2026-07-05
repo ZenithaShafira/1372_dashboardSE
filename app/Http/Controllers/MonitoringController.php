@@ -10,7 +10,7 @@ use Illuminate\Support\Carbon;
 
 class MonitoringController extends Controller
 {
-    public function dashboard()
+    public function index()
     {
         $all_pml = pml::all();
         
@@ -24,24 +24,40 @@ class MonitoringController extends Controller
             Monitoring::max('waktu_upload')
         );
 
+        // dd($getLatestUpload);
+
         $uploadTerakhir = $getLatestUpload->toDateString();
+        // dd($uploadTerakhir);
 
         // $defaultTanggal = Carbon::parse($uploadTerakhir)
         //     ->subDay()
         //     ->toDateString();
 
-        $tanggalFlatpickr = $getLatestUpload->subDay()->toDateString();
+        $tanggalFlatpickr = $getLatestUpload->copy()->subDay()->toDateString();
 
-        $uploadSebelumnya = Monitoring::whereDate('waktu_upload', '<', $uploadTerakhir)
+        $uploadSebelumnyaGet = Monitoring::whereDate('waktu_upload', '<', $uploadTerakhir)
             ->max('waktu_upload');
 
-        $uploadSebelumnya = $uploadSebelumnya
-            ? Carbon::parse($uploadSebelumnya)->toDateString()
+        $uploadSebelumnya = $uploadSebelumnyaGet
+            ? Carbon::parse($uploadSebelumnyaGet)->toDateString()
+            : null;
+
+        $ketTanggalTerakhir = $getLatestUpload->translatedFormat('d F Y') 
+            . ' pukul ' . $getLatestUpload->format('H:i');
+        
+        // dd($tanggalFlatpickr);
+        
+        $ketTanggalSebelumnya = $uploadSebelumnyaGet
+            ? Carbon::parse($uploadSebelumnyaGet)->translatedFormat('d F Y')
+                . ' pukul '
+                . Carbon::parse($uploadSebelumnyaGet)->format('H:i')
             : null;
 
         $chart = [
             'labels' => [],
             'progress' => [],
+            'total_progress' => [],
+            'sisa_target' => [],
         ];
 
         $all_pml = PML::all();
@@ -64,10 +80,17 @@ class MonitoringController extends Controller
                 ->first();
             
             $progress = ($snapshotBaru->total_progress ?? 0) - ($snapshotAwal->total_progress ?? 0);
+            $total_progress = $snapshotBaru->total_progress;
+            $target = $p->target;
+            $sisa_target = $target - $total_progress;
 
             $chart['labels'][] = $p->nama;
             $chart['progress'][] = $progress;
+            $chart['total_progress'][] = $total_progress;
+            $chart['sisa_target'][] = $sisa_target;
         }
+
+        // dd($chart);
 
         //GET DEFAULT TABEL MINGGUAN
         $pencacahSelected = $pencacah->first();
@@ -128,6 +151,8 @@ class MonitoringController extends Controller
             'pencacah',
             'uploadTerakhir',
             'uploadSebelumnya',
+            'ketTanggalTerakhir',
+            'ketTanggalSebelumnya',
             'tanggalFlatpickr',
             'chart',
             'chartMingguan'
@@ -148,17 +173,37 @@ class MonitoringController extends Controller
             ->groupBy('tanggal')
             ->orderByDesc('tanggal')
             ->value('tanggal');
-
+        
         // Upload berikutnya setelah upload awal
         $tanggalSetelah = Monitoring::whereDate('waktu_upload', '>', $tanggalAwal)
             ->selectRaw('DATE(waktu_upload) as tanggal')
             ->groupBy('tanggal')
             ->orderBy('tanggal')
             ->value('tanggal');
+
+        $uploadTerakhir = Monitoring::whereDate('waktu_upload', $tanggalSetelah)
+            ->max('waktu_upload');
+        
+        $uploadSebelumnya = Monitoring::whereDate('waktu_upload', $tanggalAwal)
+            ->max('waktu_upload');  
+        
+        $ketTanggalTerakhir = $uploadTerakhir
+            ? Carbon::parse($uploadTerakhir)->translatedFormat('d F Y') .
+                ' pukul ' .
+                Carbon::parse($uploadTerakhir)->format('H:i')
+            : null;
+
+        $ketTanggalSebelumnya = $uploadSebelumnya
+            ? Carbon::parse($uploadSebelumnya)->translatedFormat('d F Y') .
+                ' pukul ' .
+                Carbon::parse($uploadSebelumnya)->format('H:i')
+            : null;
             
         $chart = [
             'labels' => [],
             'progress' => [],
+            'total_progress' => [],
+            'sisa_target' => [],
         ];
 
         // $all_pml = PML::all();
@@ -180,18 +225,26 @@ class MonitoringController extends Controller
                 ->first();
             
             $progress = ($snapshotBaru->total_progress ?? 0) - ($snapshotAwal->total_progress ?? 0);
+            $total_progress = $snapshotBaru->total_progress;
+            $target = $p->target;
+            $sisa_target = $target - $total_progress;
 
             $chart['labels'][] = $p->nama;
             $chart['progress'][] = $progress;
+            $chart['total_progress'][] = $total_progress;
+            $chart['sisa_target'][] = $sisa_target;
         }
 
         return response()->json([
             'labels' => $chart['labels'],
             'progress' => $chart['progress'],
-            'keterangan' => 'Perhitungan: Upload '
-                . Carbon::parse($tanggalAwal)->translatedFormat('d F Y')
-                . ' → Upload '
-                . Carbon::parse($tanggalSetelah)->translatedFormat('d F Y'),
+            'total_progress' => $chart['total_progress'],
+            'sisa_target' => $chart['sisa_target'],
+            'keterangan' => 'Total Progress diperoleh dari data '
+                . $ketTanggalTerakhir
+                . ' dikurangi '
+                . $ketTanggalSebelumnya,
+            'tanggalTerakhir' => $tanggalSetelah, //ini buat tanggal total
         ]);
     }
 

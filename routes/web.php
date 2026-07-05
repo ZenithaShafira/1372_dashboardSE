@@ -1,20 +1,21 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UploadMonitoringController;
 use App\Http\Controllers\MonitoringController;
 
-Route::get('/', [MonitoringController::class, 'dashboard'])
+Route::get('/', [DashboardController::class, 'index'])
     ->name('dashboard');
 
-Route::get('/dashboard', [MonitoringController::class, 'dashboard'])
+Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
 
-Route::get('/upload', [MonitoringController::class, 'dashboard'])
-    ->name('upload');
-
-Route::post('/monitoring/upload', [UploadMonitoringController::class, 'upload'])
+Route::get('/upload', [UploadMonitoringController::class, 'index'])
     ->name('monitoring.upload');
+    
+Route::post('/upload-monitoring', [UploadMonitoringController::class, 'upload'])
+    ->name('monitoring.upload-monitoring');
 
 Route::get('/monitoring/pml/{id}', [MonitoringController::class, 'getDefaultData'])
     ->name('monitoring.perpml');
