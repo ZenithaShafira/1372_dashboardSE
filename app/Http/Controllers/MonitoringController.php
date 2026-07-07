@@ -81,13 +81,13 @@ class MonitoringController extends Controller
             
             $progress = ($snapshotBaru->total_progress ?? 0) - ($snapshotAwal->total_progress ?? 0);
             $total_progress = $snapshotBaru->total_progress;
-            $target = $p->target;
-            $sisa_target = $target - $total_progress;
+            // $target = $p->target;
+            // $sisa_target = $target - $total_progress;
 
             $chart['labels'][] = $p->nama;
             $chart['progress'][] = $progress;
             $chart['total_progress'][] = $total_progress;
-            $chart['sisa_target'][] = $sisa_target;
+            // $chart['sisa_target'][] = $sisa_target;
         }
 
         // dd($chart);
@@ -226,21 +226,21 @@ class MonitoringController extends Controller
             
             $progress = ($snapshotBaru->total_progress ?? 0) - ($snapshotAwal->total_progress ?? 0);
             $total_progress = $snapshotBaru->total_progress;
-            $target = $p->target;
-            $sisa_target = $target - $total_progress;
+            // $target = $p->target;
+            // $sisa_target = $target - $total_progress;
 
             $chart['labels'][] = $p->nama;
             $chart['progress'][] = $progress;
             $chart['total_progress'][] = $total_progress;
-            $chart['sisa_target'][] = $sisa_target;
+            // $chart['sisa_target'][] = $sisa_target;
         }
 
         return response()->json([
             'labels' => $chart['labels'],
             'progress' => $chart['progress'],
             'total_progress' => $chart['total_progress'],
-            'sisa_target' => $chart['sisa_target'],
-            'keterangan' => 'Total Progress diperoleh dari data '
+            // 'sisa_target' => $chart['sisa_target'],
+            'keterangan' => 'Progress harian diperoleh dari data '
                 . $ketTanggalTerakhir
                 . ' dikurangi '
                 . $ketTanggalSebelumnya,

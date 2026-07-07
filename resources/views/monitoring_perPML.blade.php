@@ -46,7 +46,7 @@
 
                     <div class="col-md-12">
                         <small class="text-muted d-block mb-2" id="keteranganPerhitungan">
-                            Total Progress diperoleh dari data {{ $ketTanggalTerakhir }} dikurangi {{ $ketTanggalSebelumnya }}
+                            Progress harian diperoleh dari data {{ $ketTanggalTerakhir }} dikurangi {{ $ketTanggalSebelumnya }}
                         </small>
                     </div>
                 </div>
@@ -141,7 +141,7 @@
 
                 progressChart.data.datasets[0].data = res.progress;
                 progressChart.data.datasets[1].data = res.total_progress;
-                progressChart.data.datasets[2].data = res.sisa_target;
+                // progressChart.data.datasets[2].data = res.sisa_target;
 
                 progressChart.options.scales.y.suggestedMax =
                     Math.max(...res.total_progress, 0) + 5;
@@ -252,20 +252,20 @@
                         // hoverBackgroundColor: "#F2A654",
                         // hoverBorderColor: "#B8671A"
                     },
-                    {
-                        label: 'Sisa Target',
-                        data: chartData.sisa_target,
-                        backgroundColor: "#E0E0E0",
-                        borderSkipped: false,
-                        borderRadius: {
-                            topLeft: 5,
-                            topRight: 5,
-                            bottomLeft: 0,
-                            bottomRight: 0,
-                        },
-                        stack: 'target',
-                        hidden: true,
-                    },
+                    // {
+                    //     label: 'Sisa Target',
+                    //     data: chartData.sisa_target,
+                    //     backgroundColor: "#E0E0E0",
+                    //     borderSkipped: false,
+                    //     borderRadius: {
+                    //         topLeft: 5,
+                    //         topRight: 5,
+                    //         bottomLeft: 0,
+                    //         bottomRight: 0,
+                    //     },
+                    //     stack: 'target',
+                    //     hidden: true,
+                    // },
                 ]
             },
 
