@@ -134,10 +134,11 @@ class MonitoringController extends Controller
             $tanggalAwal = Carbon::parse($p['awal']);
             $tanggalAkhir = Carbon::parse($p['akhir']);
 
-            $chartMingguan['labels'][] =
-                $tanggalAwal->translatedFormat('d M')
-                . ' - ' .
-                $tanggalAkhir->translatedFormat('d M');
+            // $chartMingguan['labels'][] =
+            //     $tanggalAwal->translatedFormat('d M')
+            //     . ' - ' .
+            //     $tanggalAkhir->translatedFormat('d M');
+            $chartMingguan['labels'][] = $tanggalAwal->translatedFormat('d M');
 
             $chartMingguan['progress'][] =
                 ($snapshotAkhir->total_progress ?? 0) -
@@ -294,10 +295,12 @@ class MonitoringController extends Controller
             $tanggalAwal = Carbon::parse($p['awal']);
             $tanggalAkhir = Carbon::parse($p['akhir']);
 
-            $chartMingguan['labels'][] =
-                $tanggalAwal->translatedFormat('d M')
-                . ' - ' .
-                $tanggalAkhir->translatedFormat('d M');
+            // $chartMingguan['labels'][] =
+            //     $tanggalAwal->translatedFormat('d M')
+            //     . ' - ' .
+            //     $tanggalAkhir->translatedFormat('d M');
+
+            $chartMingguan['labels'][] = $tanggalAwal->translatedFormat('d M');
 
             $chartMingguan['progress'][] =
                 ($snapshotAkhir->total_progress ?? 0) -
