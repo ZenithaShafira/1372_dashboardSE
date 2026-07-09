@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\PML;
 use App\Models\Monitoring;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class DashboardController extends Controller
 {
@@ -13,8 +14,16 @@ class DashboardController extends Controller
     {
         $all_pml = pml::all();
 
+        $waktuUploadTerakhir = Carbon::parse(Monitoring::max('waktu_upload'));
+
+        $ketUploadTerakhir = $waktuUploadTerakhir->translatedFormat('d F Y')
+            . ' pukul ' .
+            $waktuUploadTerakhir->format('H:i');
+
         $uploadTerakhir = Monitoring::select('id_ppl', DB::raw('MAX(waktu_upload) as waktu_upload'))
             ->groupBy('id_ppl');
+
+        // dd($ketUploadTerakhir);
 
         $data = Monitoring::joinSub($uploadTerakhir, 'upload_terakhir', function ($join) {
             $join->on('monitoring.id_ppl', '=', 'upload_terakhir.id_ppl')
@@ -24,9 +33,9 @@ class DashboardController extends Controller
         ->select(
             'ppl.id',
             'ppl.nama',
-            'ppl.target',
+            // 'ppl.target',
             'monitoring.total_progress',
-            DB::raw('(monitoring.total_progress / ppl.target * 100) as persen')
+            // DB::raw('(monitoring.total_progress / ppl.target * 100) as persen')
         );
 
         $top10 = (clone $data)
@@ -34,12 +43,15 @@ class DashboardController extends Controller
             ->take(10)
             ->get();
         
-        // dd($top10);
+        $allProgress = (clone $data)->sum('monitoring.total_progress');
         
-        $bottom10 = (clone $data)
-            ->orderBy('total_progress')
-            ->take(10)
-            ->get(); 
+        // dd($top10);
+
+        
+        // $bottom10 = (clone $data)
+        //     ->orderBy('total_progress')
+        //     ->take(10)
+        //     ->get(); 
 
         // foreach ($pencacah as $p) {
 
@@ -47,6 +59,9 @@ class DashboardController extends Controller
 
         return view('dashboard', compact(
             'all_pml',
+            'top10',
+            'allProgress',
+            'ketUploadTerakhir'
         ));
     }
 }

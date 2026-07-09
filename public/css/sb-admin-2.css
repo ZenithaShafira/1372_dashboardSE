@@ -85,6 +85,29 @@
     }
 }
 
+.bg-light-custom {
+    background-color: #eceff1; /* sedikit lebih gelap dari bg-light */
+}
+
+.podium-1{
+    background: linear-gradient(135deg, #4e73df, #224abe);
+    color: white;
+}
+
+.podium-2{
+    background: linear-gradient(135deg, #36b9cc, #1b8ea5);
+    color: white;
+}
+
+.podium-3{
+    background: linear-gradient(135deg, #6c757d, #495057);
+    color: white;
+}
+
+.podium:hover{
+    transform:translateY(-5px);
+}
+
 *,
 *::before,
 *::after {
