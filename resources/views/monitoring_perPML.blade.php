@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Monitoring PML')
+@section('title', 'Monitoring Per PML')
 
 @section('content')
 
@@ -241,7 +241,8 @@
                     {
                         label: 'Total Progress',
                         data: chartData.total_progress,
-                        backgroundColor: "#66BB6A",
+                        // backgroundColor: "#66BB6A",
+                        backgroundColor: "#4DB7E5",
                         // backgroundColor: chartData.progress.map((_, i) => colors[i % colors.length]),
                         // borderColor: chartData.progress.map((_, i) => colors[i % colors.length]),
                         // borderColor: "#C96A1B",

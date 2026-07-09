@@ -6,6 +6,7 @@
     
     <title>@yield('title')</title>
 
+    <link rel="icon" type="image/png" href="{{ asset('img/logo-bps-kecil.svg') }}">
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
     <link href="{{ asset('css/flatpickr.min.css') }}" rel="stylesheet">
