@@ -38,10 +38,16 @@ class DashboardController extends Controller
             // DB::raw('(monitoring.total_progress / ppl.target * 100) as persen')
         );
 
-        $top10 = (clone $data)
+        $top10tinggi = (clone $data)
             ->orderByDesc('total_progress')
             ->take(10)
             ->get();
+        
+        $top10rendah = (clone $data)
+            ->orderBy('total_progress') //ASC
+            ->take(10)
+            ->get();
+        // dd($top10rendah);
         
         $allProgress = (clone $data)->sum('monitoring.total_progress');
         
@@ -59,7 +65,8 @@ class DashboardController extends Controller
 
         return view('dashboard', compact(
             'all_pml',
-            'top10',
+            'top10tinggi',
+            'top10rendah',
             'allProgress',
             'ketUploadTerakhir'
         ));
