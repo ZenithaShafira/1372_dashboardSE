@@ -123,7 +123,7 @@
                 <div class="card-body">
 
                     {{-- PODIUM --}}
-                    <div class="row align-items-end text-center mb-4 mt-2 align-items-center">
+                    <!-- <div class="row align-items-end text-center mb-4 mt-2 align-items-center">
 
                         {{-- Juara 2 --}}
                         <div class="col-4">
@@ -158,7 +158,7 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> -->
 
                     @php
                         $max = $top10tinggi->max('total_progress');
@@ -169,11 +169,11 @@
 
                     <div class="row align-items-center py-2 {{ $loop->odd ? 'bg-light-custom' : '' }}">
 
-                        <div class="col-1 font-weight-bold text-gray-800 text-center">
+                        <div class="col-2 font-weight-bold text-gray-800 text-center">
                             {{ $loop->iteration}}
                         </div>
 
-                        <div class="col-9 text-gray-800">
+                        <div class="col-8 text-gray-800">
                             {{ $p->nama }}
                         </div>
 
@@ -205,7 +205,7 @@
             
                 <!-- Card Header -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Top 10 Total Progress Tertinggi</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Top 10 Total Progress Terendah</h6>
                 </div>
 
                 <!-- Card Body -->
@@ -220,11 +220,11 @@
 
                     <div class="row align-items-center py-2 {{ $loop->odd ? 'bg-light-custom' : '' }}">
 
-                        <div class="col-1 font-weight-bold text-gray-800 text-center">
-                            {{ $loop->iteration}}
+                        <div class="col-2 font-weight-bold text-gray-800 text-center">
+                            {{ 61 + $loop->index }}
                         </div>        
 
-                        <div class="col-9 text-gray-800">
+                        <div class="col-8 text-gray-800">
                             {{ $p->nama }}
                         </div>
 

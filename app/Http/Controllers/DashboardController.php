@@ -46,8 +46,10 @@ class DashboardController extends Controller
         $top10rendah = (clone $data)
             ->orderBy('total_progress') //ASC
             ->take(10)
-            ->get();
-        // dd($top10rendah);
+            ->get()
+            ->sortByDesc('total_progress')
+            ->values();
+        // dd($top10rendah);dd
         
         $allProgress = (clone $data)->sum('monitoring.total_progress');
         

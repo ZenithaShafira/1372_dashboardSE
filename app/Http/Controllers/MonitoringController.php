@@ -80,7 +80,7 @@ class MonitoringController extends Controller
                 ->first();
             
             $progress = ($snapshotBaru->total_progress ?? 0) - ($snapshotAwal->total_progress ?? 0);
-            $total_progress = $snapshotBaru->total_progress;
+            $total_progress = $snapshotBaru->total_progress ?? 0;
             // $target = $p->target;
             // $sisa_target = $target - $total_progress;
 
